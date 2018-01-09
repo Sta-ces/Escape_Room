@@ -11,16 +11,56 @@ public class Inventory  : MonoBehaviour
 
 
     #region Public Void
-    public void AddToInventory(GameObject PickedItem)
+
+    /*
+    public void AddToInventory(GameObject PickedItem, float charge = 0)
     {
-        m_inventory.Add(PickedItem);
-    }
-    public void AddToInventoryAndEquip(GameObject PickedItem)
+        PickedItem.SetActive(false);
+        StructUsableItem item = new StructUsableItem()
+        {
+            obj = PickedItem,
+            charges = charge
+        };
+        m_inventory.Add(item);
+    }*/
+    public void AddToInventoryAndEquip(GameObject PickedItem, float charge = 0)
     {
-        m_inventory.Add(PickedItem);
-        m_currentItem = PickedItem;
+        StructUsableItem item = new StructUsableItem()
+        {
+            obj = PickedItem,
+            charges = charge
+        };
+        m_inventory.Add(item);
+        if(m_inventory.Count>0)
+        {
+            m_inventory[m_posOfCurrentEquipedItem].obj.SetActive(false);
+        }
+        
+        m_posOfCurrentEquipedItem = m_inventory.Count - 1;
     }
     public void SwitchToNextItemFromInventory()
+    {
+        if(m_inventory.Count>1)//si y'a plus d'une item
+        {
+            if(m_posOfCurrentEquipedItem + 1 < m_inventory.Count)//si l'item actuellement sélectionnée n'est pas la dernière de la liste, passe a suivante
+            {
+                m_inventory[m_posOfCurrentEquipedItem].obj.SetActive(false);
+                m_posOfCurrentEquipedItem++;
+                m_inventory[m_posOfCurrentEquipedItem].obj.SetActive(true);
+            }
+            else //si l'item actuellement sélectionnée est la dernière de la liste, passe la la 1ere
+            {
+                m_inventory[m_posOfCurrentEquipedItem].obj.SetActive(false);
+                m_posOfCurrentEquipedItem=0;
+                m_inventory[m_posOfCurrentEquipedItem].obj.SetActive(true);
+            }
+        }
+    }
+    public void DropCurrentItem()
+    {
+
+    }
+    public void DestroyCurrentItem()/*for useableItems*/
     {
 
     }
@@ -42,9 +82,8 @@ public class Inventory  : MonoBehaviour
 
 
     #region Private And Protected Members
-    private List<GameObject> m_inventory = new List<GameObject>();
-    private GameObject m_currentItem;
-    private int m_posOfCurrentItemInInventory;
+    private int m_posOfCurrentEquipedItem;
+    private List<StructUsableItem> m_inventory = new List<StructUsableItem>();
     #endregion
 
 }
