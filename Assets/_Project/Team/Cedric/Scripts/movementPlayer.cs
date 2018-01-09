@@ -62,6 +62,9 @@ public class movementPlayer : MonoBehaviour
         m_cameraVector.y = m_player.GetAxis("CameraHorizontal");
         m_cameraVector.x = m_player.GetAxis("CameraVertical");
 
+        //float pourcent=0.23f;
+        //float myValue = 15f + (55 - 15f) * pourcent;
+
         if (m_player.GetButtonDown("Use"))
         {
             Debug.Log("Use");
