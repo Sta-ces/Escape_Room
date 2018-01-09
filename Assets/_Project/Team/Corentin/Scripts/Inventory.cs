@@ -24,6 +24,14 @@ public class Inventory  : MonoBehaviour
     {
 
     }
+    public void DropCurrentItem()
+    {
+
+    }
+    public void DestroyCurrentItem()/*for useableItems*/
+    {
+
+    }
     #endregion
 
 

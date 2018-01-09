@@ -6,7 +6,9 @@ public class UseItem : MonoBehaviour {
 
     #region Public Members
     public GameObject m_playerCharacter;
-    public float m_maxDistanceInteraction = 1.3f;
+    public GameObject m_handHeldObj;
+    public Inventory m_myInventory;
+    public float m_maxDistanceInteraction = 2f;
     #endregion
 
 
@@ -76,7 +78,11 @@ public class UseItem : MonoBehaviour {
                 }
                 if (hit.transform.gameObject.tag == "Pickable")
                 {
-                    //to be continued
+                    hit.transform.position = m_handHeldObj.transform.position;
+                    hit.transform.parent = m_handHeldObj.transform;
+                    hit.transform.localRotation = Quaternion.Euler(-180f, 0f, 0f);
+                    hit.transform.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+                    m_myInventory.AddToInventoryAndEquip(hit.transform.gameObject);
                 }
                 if (hit.transform.gameObject.tag == "Switch")
                 {
