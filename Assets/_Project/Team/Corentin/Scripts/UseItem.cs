@@ -66,7 +66,7 @@ public class UseItem : MonoBehaviour {
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
-            Debug.Log(hit.transform.gameObject.tag);
+            Debug.Log(hit.transform.gameObject.name);
             if (hit.distance < m_maxDistanceInteraction)//if the object is close enough to be interacted with
             {
                 if (hit.transform.gameObject.tag == "Movable")
@@ -99,15 +99,15 @@ public class UseItem : MonoBehaviour {
 
     private void AddAndEditItemAsEquipement(GameObject obj)
     {
-        if(obj.name.Contains("FireAxe_low"))//la rotation vas varier selon le type d'item, exemple, hache et clé ont rotation différentes...
-        {
-            obj.transform.localRotation = Quaternion.Euler(-180f, 0f, 0f);
-        }
-        
-        
+
         obj.transform.position = m_handHeldObj.transform.position;
         obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         obj.transform.parent = m_handHeldObj.transform;
+        
+        if (obj.name.Contains("FireAxe"))//la rotation vas varier selon le type d'item, exemple, hache et clé ont rotation différentes...
+        {
+            obj.transform.localRotation = Quaternion.Euler(-180f, 0f, 0f);
+        }
         m_myInventory.AddToInventoryAndEquip(obj,0,true);
     }
     #endregion
