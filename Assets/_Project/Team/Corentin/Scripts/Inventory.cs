@@ -31,11 +31,10 @@ public class Inventory  : MonoBehaviour
             charges = charge
         };
         m_inventory.Add(item);
-        if(m_inventory.Count>0)
+        if(m_inventory.Count>1)
         {
             m_inventory[m_posOfCurrentEquipedItem].obj.SetActive(false);
         }
-        
         m_posOfCurrentEquipedItem = m_inventory.Count - 1;
     }
     public void SwitchToNextItemFromInventory()
