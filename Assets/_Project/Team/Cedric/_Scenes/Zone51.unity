@@ -148,6 +148,8 @@ MonoBehaviour:
   m_cameraPlayer: {fileID: 601514543}
   m_moveSpeed: 3
   m_cameraSpeed: 100
+  m_minRotationVertical: 15
+  m_maxRotationVertical: -55
 --- !u!54 &305724107
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -161,7 +163,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 64
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!23 &305724108
 MeshRenderer:
@@ -197,8 +199,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!135 &305724109
-SphereCollider:
+--- !u!65 &305724109
+BoxCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -207,7 +209,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Size: {x: 2, y: 2, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &305724110
 MeshFilter:
@@ -284,8 +286,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!135 &365371720
-SphereCollider:
+--- !u!65 &365371720
+BoxCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -294,7 +296,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Size: {x: 2, y: 2, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!33 &365371721
 MeshFilter:
@@ -332,6 +334,8 @@ MonoBehaviour:
   m_cameraPlayer: {fileID: 2102552413}
   m_moveSpeed: 3
   m_cameraSpeed: 100
+  m_minRotationVertical: 0
+  m_maxRotationVertical: 10
 --- !u!54 &365371725
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -345,7 +349,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 64
+  m_Constraints: 0
   m_CollisionDetection: 0
 --- !u!1 &601514539
 GameObject:
@@ -905,7 +909,7 @@ MonoBehaviour:
         _elementType: 0
         _elementIdentifierId: 2
         _axisRange: 0
-        _invert: 1
+        _invert: 0
         _axisContribution: 0
         _keyboardKeyCode: 0
         _modifierKey1: 0
@@ -1071,7 +1075,7 @@ MonoBehaviour:
         _elementType: 0
         _elementIdentifierId: 1
         _axisRange: 0
-        _invert: 0
+        _invert: 1
         _axisContribution: 0
         _keyboardKeyCode: 0
         _modifierKey1: 0
@@ -1100,7 +1104,7 @@ MonoBehaviour:
         _elementType: 0
         _elementIdentifierId: 1
         _axisRange: 0
-        _invert: 0
+        _invert: 1
         _axisContribution: 0
         _keyboardKeyCode: 0
         _modifierKey1: 0

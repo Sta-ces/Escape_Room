@@ -18,8 +18,8 @@ public class movementPlayer : MonoBehaviour
 
     public float m_moveSpeed = 3.0f;
     public float m_cameraSpeed = 100.0f;
-    /*public float m_minRotationVertical = 15f;
-    public float m_maxRotationVertical = -55f;*/
+    public float m_minRotationVertical = 15f;
+    public float m_maxRotationVertical = -55f;
 
     private Player m_player; // The Rewired Player
     private Rigidbody m_rigidbody;
@@ -74,6 +74,6 @@ public class movementPlayer : MonoBehaviour
         m_rigidbody.transform.Translate(m_moveVector * m_moveSpeed * Time.deltaTime);
         m_rigidbody.transform.Rotate(0, m_cameraVector.y * m_cameraSpeed * Time.deltaTime, 0, Space.World);
 
-        m_cameraPlayer.transform.Rotate(m_cameraVector.x * m_cameraSpeed * Time.deltaTime, 0, 0, Space.Self);
+        m_cameraPlayer.transform.Rotate(m_cameraVector.x * m_cameraSpeed * Time.deltaTime, 0, 0);
     }
 }
