@@ -6,4 +6,5 @@ public struct StructUsableItem
 {
     public GameObject obj;
     public float charges;
+    public bool isAWeapon;
 }
