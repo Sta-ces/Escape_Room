@@ -23,12 +23,13 @@ public class Inventory  : MonoBehaviour
         };
         m_inventory.Add(item);
     }*/
-    public void AddToInventoryAndEquip(GameObject PickedItem, float charge = 0)
+    public void AddToInventoryAndEquip(GameObject PickedItem, float charge = 0 , bool weapon= false)
     {
         StructUsableItem item = new StructUsableItem()
         {
             obj = PickedItem,
-            charges = charge
+            charges = charge,
+            isAWeapon = weapon
         };
         m_inventory.Add(item);
         if(m_inventory.Count>1)

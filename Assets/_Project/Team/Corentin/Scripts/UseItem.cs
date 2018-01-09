@@ -73,16 +73,12 @@ public class UseItem : MonoBehaviour {
                 {
                     m_isPullingObject = true;
                     m_pulledObject = hit.transform.gameObject;
-                    //il faudra un son ici pour quand on commence a tirer un objet autrement sans bouger on s'ne rend pas compte
+                    //il faudra un son ici pour quand on commence a tirer un objet autrement sans bouger on se rend pas compte qu'il est tiré
                     hit.transform.parent = m_playerCharacter.transform;
                 }
                 if (hit.transform.gameObject.tag == "Pickable")
                 {
-                    hit.transform.position = m_handHeldObj.transform.position;
-                    hit.transform.parent = m_handHeldObj.transform;
-                    hit.transform.localRotation = Quaternion.Euler(-180f, 0f, 0f);
-                    hit.transform.gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                    m_myInventory.AddToInventoryAndEquip(hit.transform.gameObject);
+                    AddAndEditItemAsEquipement(hit.transform.gameObject);
                 }
                 if (hit.transform.gameObject.tag == "Switch")
                 {
@@ -101,6 +97,19 @@ public class UseItem : MonoBehaviour {
         }
     }
 
+    private void AddAndEditItemAsEquipement(GameObject obj)
+    {
+        if(obj.name.Contains("FireAxe_low"))//la rotation vas varier selon le type d'item, exemple, hache et clé ont rotation différentes...
+        {
+            obj.transform.localRotation = Quaternion.Euler(-180f, 0f, 0f);
+        }
+        
+        
+        obj.transform.position = m_handHeldObj.transform.position;
+        obj.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+        obj.transform.parent = m_handHeldObj.transform;
+        m_myInventory.AddToInventoryAndEquip(obj,0,true);
+    }
     #endregion
 
     #region Tools Debug And Utility
