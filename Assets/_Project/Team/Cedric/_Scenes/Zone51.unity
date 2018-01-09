@@ -144,8 +144,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66548b9e3555d3c48b6deec3afbfaa49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerName: Player 2
-  moveSpeed: 3
+  m_playerName: 1
+  m_moveSpeed: 3
 --- !u!54 &305724107
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -324,8 +324,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66548b9e3555d3c48b6deec3afbfaa49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerName: Player 1
-  moveSpeed: 3
+  m_playerName: 0
+  m_moveSpeed: 3
 --- !u!54 &365371725
 Rigidbody:
   m_ObjectHideFlags: 0
