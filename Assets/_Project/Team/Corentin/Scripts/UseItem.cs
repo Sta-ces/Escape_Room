@@ -12,14 +12,14 @@ public class UseItem : MonoBehaviour {
 
     #region Public Void
     //les fonctions que cédric appellera avec ses controles
-    public void ButtonIsPressed()
+    public void Activate()
     {
         if (!m_actionStarted)
         {
             ItemInteractionStart();
         }
     }
-    public void ButtonIsUnPressed()
+    public void Deactivate()
     {
         ItemInteractionStop();
     }
@@ -28,27 +28,27 @@ public class UseItem : MonoBehaviour {
 
 
     #region System
-    /*
-    void Start()
-    {
-    }
+
     void Awake()
     {
-    }*/
+        if(m_playerCharacter==null)
+        {
+            m_playerCharacter = this.gameObject;
+        }
+    }
 
     //temporaire jusqu'a ce qu'on ai géré les inputs, alors cédric utilisera ItemInteractionStart(); et ItemInteractionStop(); depuis ses fonctions
     void Update()
     {
-        
         if(Input.GetButton("Fire1"))
         {
-            ButtonIsPressed();
+            Activate();
         }
         else
         {
             if(m_actionStarted)
             {
-                ButtonIsUnPressed();
+                Deactivate();
             }
         }
     }
@@ -76,7 +76,7 @@ public class UseItem : MonoBehaviour {
                 }
                 if (hit.transform.gameObject.tag == "Pickable")
                 {
-
+                    //to be continued
                 }
                 if (hit.transform.gameObject.tag == "Switch")
                 {
