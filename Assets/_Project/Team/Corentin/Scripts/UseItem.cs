@@ -175,7 +175,15 @@ public class UseItem : MonoBehaviour {
                 }
                 if (hit.transform.gameObject.tag == "Switch")
                 {
-                    hit.transform.gameObject.GetComponent<InteractableObject>().UseActionKeyOnObject();
+                    if(m_myInventory.GetIsInventoryEmpty())
+                    {
+                        hit.transform.gameObject.GetComponent<InteractableObject>().UseActionKeyOnObject();
+                    }
+                    else
+                    {
+                        hit.transform.gameObject.GetComponent<InteractableObject>().UseActionKeyOnObject(m_myInventory.GetCurrentlyEquippedItem().obj);
+                    }
+                    
                 }
             }
         }
