@@ -150,6 +150,7 @@ public class CameraControl : MonoBehaviour {
     }
     private bool PlayerLookSameDirection()
     {
+        
         /* float angleP1 = Vector3.SignedAngle(Vector3.zero,_player1Cam.transform.position, Vector3.left);
          float angleP2 = Vector3.SignedAngle(DistanceBetweenPlayer() / 2, Vector3.zero, Vector3.up);*/
         float angleP1 = Quaternion.Angle(_player1Cam.transform.rotation, Quaternion.identity);
