@@ -45,9 +45,30 @@ public class Inventory  : MonoBehaviour
             }
         }
     }
-    public void DropCurrentItem()
+    public bool CheckIfItemIsEquipped()
     {
-        //not done yet
+        if (m_inventory.Count > 0)//si y'a au moins 1 item
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public void RemoveCurrentItem()
+    {
+        m_inventory.RemoveAt(m_posOfCurrentEquipedItem);
+        if(m_inventory.Count==0)
+        {
+            m_isEmpty = true;
+        }
+        else
+        {
+            m_posOfCurrentEquipedItem=0;
+            m_inventory[m_posOfCurrentEquipedItem].obj.SetActive(true);
+        }
     }
     public void DestroyCurrentItem()/*for useableItems*/
     {
