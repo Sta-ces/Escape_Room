@@ -9,6 +9,9 @@ public class UseItem : MonoBehaviour {
     public GameObject m_handHeldObj;
     public Inventory m_myInventory;
     public float m_maxDistanceInteraction = 2f;
+    public float m_timeBetweenInventoryItemSwitch = 0.3f;
+    public float m_timeToKeepButtonPushedToLiftItem = 0.45f;
+    public float m_timeBeforeCanDropItemJustPicked = 2f;
     #endregion
 
 
@@ -16,22 +19,16 @@ public class UseItem : MonoBehaviour {
     //les fonctions que cédric appellera avec ses controles
     public void ActivateUseKey()
     {
-        if (!m_isPullingObject)//s'il n'est pas en train de tirer un block
-        {
-            if(m_timerLift==0)
-            {
-                StartCoroutine("TimerLiftItem");//lance un compteur après 1ere fois bouton appuyer
-                //vas compter le temps ou le bouton est appuyer
-            }
-            m_timerLift += Time.deltaTime;
-            ItemInteractionStart();
-        }
-        else
+        if (m_isPullingObject)//s'il est en train de tirer un block
         {
             if (m_canDrop == true)
             {
                 ItemInteractionStop();
             }
+        }
+        else
+        {
+            ItemInteractionStart();
         }
     }
     public void ActivateSwitchWeaponKey()
@@ -47,22 +44,22 @@ public class UseItem : MonoBehaviour {
 
     IEnumerator TimerSwitchW()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(m_timeBetweenInventoryItemSwitch);
         m_onTimerSwitchWeapon = false;
     }
     IEnumerator TimerLiftItem()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(m_timeToKeepButtonPushedToLiftItem);
         Debug.Log(m_timerLift);
-        if (m_timerLift>0.45f)//s'il a laisser appuyer 4/10eme de sec
+        if (m_timerLift> m_timeToKeepButtonPushedToLiftItem)//s'il a laisser appuyer 4/10eme de sec
         {
             m_canLift = true;
-            m_timerLift = 0;
         }
+        m_timerLift = 0;
     }
     IEnumerator TimerAfterLiftItem()//pour qu'on ne drop pas l'item a l'instant ou l'a ramasser, on met un timer^^
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(m_timeBeforeCanDropItemJustPicked);
         m_canDrop = true;
     }
 
@@ -108,9 +105,15 @@ public class UseItem : MonoBehaviour {
             {
                 if (hit.transform.gameObject.tag == "Movable")
                 {
-                    if(m_canLift)
+                    if (m_timerLift == 0)
                     {
-                        Debug.Log("lift");
+                        StartCoroutine("TimerLiftItem");//lance un compteur après 1ere fois bouton appuyer qd on vise objet movable
+                                                        
+                    }
+                    m_timerLift += Time.deltaTime;//vas compter le temps ou le bouton est appuyer pendant qu'on vise objet movable, si on a laisser appuyer 4/10sec canlift=true (voir coroutine)
+                    if (m_canLift)
+                    {
+                        Debug.Log("lifting");
                         m_pulledObject = hit.transform.gameObject;
                         //il faudra un son ici pour quand on commence a tirer un objet autrement sans bouger on se rend pas compte qu'il est tiré
                         hit.transform.parent = m_playerCharacter.transform;
@@ -136,6 +139,7 @@ public class UseItem : MonoBehaviour {
     {
         m_pulledObject.transform.parent = null;
         m_isPullingObject = false;
+        Debug.Log("dropped");
     }
 
     private void AddAndEditItemAsEquipement(GameObject obj)
