@@ -148,6 +148,8 @@ MonoBehaviour:
   m_cameraPlayer: {fileID: 601514543}
   m_moveSpeed: 3
   m_cameraSpeed: 100
+  m_minCameraAngle: -50
+  m_maxCameraAngle: 50
 --- !u!54 &305724107
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -332,6 +334,8 @@ MonoBehaviour:
   m_cameraPlayer: {fileID: 2102552413}
   m_moveSpeed: 3
   m_cameraSpeed: 100
+  m_minCameraAngle: -50
+  m_maxCameraAngle: 50
 --- !u!54 &365371725
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -419,7 +423,7 @@ Camera:
     m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
+  m_TargetDisplay: 2
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
@@ -1376,7 +1380,7 @@ Camera:
     m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
+  m_TargetDisplay: 1
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
