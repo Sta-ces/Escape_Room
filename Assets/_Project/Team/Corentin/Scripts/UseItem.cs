@@ -17,7 +17,7 @@ public class UseItem : MonoBehaviour {
 
     #region Public Void
     //les fonctions que cédric appellera avec ses controles
-    public void ActivateUseKey()
+    public void Activate()
     {
         if (m_isPullingObject)//s'il est en train de tirer un block
         {
@@ -82,7 +82,7 @@ public class UseItem : MonoBehaviour {
         
         if(Input.GetButton("Fire1"))
         {
-            ActivateUseKey();
+            Activate();
         }
         if(Input.GetButton("Fire2"))
         {
