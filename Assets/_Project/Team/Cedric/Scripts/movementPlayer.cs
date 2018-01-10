@@ -25,18 +25,14 @@ public class movementPlayer : MonoBehaviour
     {
         // Get the character controller
         m_rigidbody = GetComponent<Rigidbody>();
-
-        // Instance UseItem class
-        //m_useItem = new UseItem();
-
-        // Instance FlashLight class
-        //m_useLight = new FlashLight();
+        m_rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
     }
 
     void Start()
     {
         // Disappear the mouse on play
         Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     void Update()
@@ -84,7 +80,10 @@ public class movementPlayer : MonoBehaviour
             m_useLight.Switch();
         }
 
-        
+        if (Input.GetButtonDown("Jump"))
+        {
+            Cursor.visible = (!Cursor.visible);
+        }
     }
 
     private void ProcessInput()
