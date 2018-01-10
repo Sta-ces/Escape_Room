@@ -13,7 +13,11 @@ public class CameraControl : MonoBehaviour {
     [SerializeField]
     private bool m_withFaceView;
     [SerializeField]
-    private float m_maxdistance=15f;
+    private float m_CamHeight;
+    [SerializeField]
+    private float m_CamRecoil;
+    [SerializeField]
+    private float m_maxdistance = 15f;
     private Camera _player1Cam;
     private Camera _player2Cam;
     private Camera _main_cam;
@@ -21,6 +25,7 @@ public class CameraControl : MonoBehaviour {
     private Transform _player1Tr;
     private Transform _player2Tr;
     private bool testChangeCam=true;
+
     private void Start()
     {
         InitiateCamera();
@@ -69,7 +74,7 @@ public class CameraControl : MonoBehaviour {
 
         Vector3 camDist = t1.position-(t1.position - t2.position) / 2;
         Vector3 withObj;
-        withObj = new Vector3(camDist.x, 2f, camDist.z+10f);
+        withObj = new Vector3(camDist.x,m_CamHeight, camDist.z+m_CamRecoil);
         _mainCamTr.position = withObj;
         _mainCamTr.rotation= Quaternion.AngleAxis(-180, Vector3.up);
         t1 = null;
@@ -113,9 +118,9 @@ public class CameraControl : MonoBehaviour {
         _player2Cam = m_player2.GetComponentInChildren<Camera>();
         _main_cam = m_mainCam.GetComponent<Camera>();
         _mainCamTr = m_mainCam.transform;
-        _mainCamTr.rotation = Quaternion.AngleAxis(0f, Vector3.up);
-        _player1Tr.rotation = Quaternion.AngleAxis(0f, Vector3.up);
-        _player2Tr.rotation = Quaternion.AngleAxis(0f, Vector3.up);
+        _mainCamTr.rotation = Quaternion.AngleAxis(0f, Vector3.down);
+        _player1Tr.rotation = Quaternion.AngleAxis(0f, Vector3.down);
+        _player2Tr.rotation = Quaternion.AngleAxis(0f, Vector3.down);
 
 
         //_mainCamTr.position = new Vector3(0f,0f,0f);
