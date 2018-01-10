@@ -12,7 +12,6 @@ public class UseItem : MonoBehaviour {
     public float m_timeBetweenInventoryItemSwitch = 0.3f;
     public float m_timeToKeepButtonPushedToLiftItem = 0.45f;
     public float m_timeBeforeCanDropItemJustPicked = 2f;
-    [Range (0.5f,3f)]
     public float m_durationOfAttack = 1f;
     #endregion
 
@@ -72,9 +71,12 @@ public class UseItem : MonoBehaviour {
         m_canDrop = true;
     }
 
-    IEnumerator TimerAttackDuration()
+    IEnumerator TimerAttackDuration(Animator WeaponAnimator)
     {
+        m_isAttacking = true;
+        WeaponAnimator.SetBool("StartAnim", true);
         yield return new WaitForSeconds(m_durationOfAttack);
+        WeaponAnimator.SetBool("StartAnim", false);
         m_isAttacking = false;
     }
 
@@ -95,7 +97,7 @@ public class UseItem : MonoBehaviour {
     void Update()
     {
 
-        if (Input.GetButton("Fire3"))//gachette tir
+        if (Input.GetButton("Fire1"))//gachette tir
         {
             Attack();
         }
@@ -166,12 +168,28 @@ public class UseItem : MonoBehaviour {
     {
         if(!m_isAttacking && ! m_isPullingObject) //ne peut pas lancer d'attaque si attaque en cours ou objet porté
         {
-            if (m_myInventory.GetCurrentlyEquippedItem().isAWeapon)
+            if(!m_myInventory.GetIsInventoryEmpty())
             {
-                StartCoroutine("TimerAttackDuration");
-
-
-
+                if (m_myInventory.GetCurrentlyEquippedItem().isAWeapon)
+                {
+                    Animator weaponAnimator = m_myInventory.GetCurrentlyEquippedItem().obj.GetComponent<Animator>();
+                    StartCoroutine("TimerAttackDuration", weaponAnimator);
+                }
+            }
+        }
+    }
+    private void AttackHit()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, 100f))
+        {
+            if (hit.distance < m_maxDistanceInteraction)//if the object is close enough to be interacted with
+            {
+                if (hit.transform.gameObject.GetComponent<InteractableObject>())
+                {
+                    hit.transform.gameObject.GetComponent<InteractableObject>().HittingObject();
+                }
             }
         }
     }
