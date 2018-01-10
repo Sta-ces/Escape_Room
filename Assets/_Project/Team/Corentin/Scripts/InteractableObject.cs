@@ -13,10 +13,29 @@ public class InteractableObject  : MonoBehaviour
 
 
     #region Public Void
-    public void UseActionKeyOnObject()
+    public void UseActionKeyOnObject(GameObject EquippedItem = null)
     {
-        //Debug.Log("Object " + this.gameObject.name + " is used");
-        //code some effect here...
+        if(gameObject.name.Contains("Chest"))
+        {
+            if(EquippedItem!=null)
+            {
+                if(EquippedItem.name.Contains("Key"))
+                {
+                    gameObject.GetComponent<Animator>().SetBool("isOpen", true);
+                    foreach (Collider col in gameObject.GetComponents<Collider>())
+                    {
+                        if (col.isTrigger)
+                        {
+                            StartCoroutine("TimerToOpenChest", col);
+                        }
+                    }
+                }
+                else
+                {
+                    //un son de lock
+                }
+            }
+        }
     }
     public void HittingObject(int damage)
     {
@@ -28,6 +47,12 @@ public class InteractableObject  : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+    }
+
+    IEnumerator TimerToOpenChest(Collider col)//pour qu'on ne drop pas l'item a l'instant ou l'a ramasser, on met un timer^^
+    {
+        yield return new WaitForSeconds(2f);
+        col.enabled = false;
     }
     #endregion
 
@@ -46,7 +71,7 @@ public class InteractableObject  : MonoBehaviour
 
 
     #region Private And Protected Members
-    
+
     #endregion
 
 }

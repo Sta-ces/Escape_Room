@@ -27,10 +27,10 @@ public class movementPlayer : MonoBehaviour
         m_rigidbody = GetComponent<Rigidbody>();
 
         // Instance UseItem class
-        m_useItem = new UseItem();
+        //m_useItem = new UseItem();
 
         // Instance FlashLight class
-        m_useLight = new FlashLight();
+        //m_useLight = new FlashLight();
     }
 
     void Start()
@@ -108,7 +108,7 @@ public class movementPlayer : MonoBehaviour
         {
             m_cameraRotationState.x = m_maxCameraAngle;
         }
-        m_cameraPlayer.transform.localEulerAngles = -m_cameraRotationState;
+        m_cameraPlayer.transform.localEulerAngles = m_cameraRotationState;
     }
 
     private Player m_player; // The Rewired Player
@@ -116,6 +116,8 @@ public class movementPlayer : MonoBehaviour
     private Vector3 m_moveVector;
     private Vector3 m_cameraVector;
     private Vector3 m_cameraRotationState;
+    [SerializeField]
     private UseItem m_useItem;
+    [SerializeField]
     private FlashLight m_useLight;
 }

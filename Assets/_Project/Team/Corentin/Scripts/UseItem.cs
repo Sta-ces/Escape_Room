@@ -8,10 +8,12 @@ public class UseItem : MonoBehaviour {
     public GameObject m_playerCharacter;
     public GameObject m_handHeldObj;
     public Inventory m_myInventory;
+    public Camera m_mycamera;
     public float m_maxDistanceInteraction = 2f;
     public float m_timeBetweenInventoryItemSwitch = 0.3f;
     public float m_timeToKeepButtonPushedToLiftItem = 0.45f;
     public float m_timeBeforeCanDropItemJustPicked = 2f;
+    public float m_timeBeforeCanDropItemEquipped = 0.5f;
     public float m_durationOfAttack = 1f;
     #endregion
 
@@ -48,6 +50,18 @@ public class UseItem : MonoBehaviour {
     {
         HandleAttack();
     }
+    public void DropEquippedItem()
+    {
+        if (m_myInventory.CheckIfItemIsEquipped() && m_canDropEquipped == true)//vérifie qu'il y a au moins 1 item équipée
+        {
+            GameObject objToDrop = m_myInventory.GetCurrentlyEquippedItem().obj;
+            objToDrop.transform.parent = null;
+            m_myInventory.RemoveCurrentItem();
+            objToDrop.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            StartCoroutine("TimerAfterDropEquippedItem");
+            m_canDropEquipped = false;
+        }
+    }
     //--------------------------------------------------------
 
     IEnumerator TimerSwitchW()
@@ -75,20 +89,24 @@ public class UseItem : MonoBehaviour {
     {
         m_isAttacking = true;
         WeaponAnimator.SetBool("StartAnim", true);
-        Debug.Log("anim start");
         yield return new WaitForSeconds(m_durationOfAttack);
         AttackHit();
         WeaponAnimator.SetBool("StartAnim", false);
-        Debug.Log("anim stop");
         m_isAttacking = false;
     }
 
-        #endregion
+    IEnumerator TimerAfterDropEquippedItem()//pour qu'on ne drop pas l'item a l'instant ou l'a ramasser, on met un timer^^
+    {
+        yield return new WaitForSeconds(m_timeBeforeCanDropItemEquipped);
+        m_canDropEquipped = true;
+    }
+
+    #endregion
 
 
-        #region System
+    #region System
 
-        void Awake()
+    void Awake()
     {
         if(m_playerCharacter==null)
         {
@@ -112,6 +130,10 @@ public class UseItem : MonoBehaviour {
         {
             ActivateSwitchWeaponKey();
         }
+        if(Input.GetButton("Submit"))
+        {
+            DropEquippedItem();
+        }
 
     }
     //----------------------------------------------------------
@@ -121,11 +143,10 @@ public class UseItem : MonoBehaviour {
 
     private void ItemInteractionStart()
     {
-        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        Ray ray = m_mycamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit , 100f))
         {
-            //Debug.Log(hit.transform.gameObject.name);
             if (hit.distance < m_maxDistanceInteraction)//if the object is close enough to be interacted with
             {
                 if (hit.transform.gameObject.tag == "Movable")
@@ -154,7 +175,15 @@ public class UseItem : MonoBehaviour {
                 }
                 if (hit.transform.gameObject.tag == "Switch")
                 {
-                    hit.transform.gameObject.GetComponent<InteractableObject>().UseActionKeyOnObject();
+                    if(m_myInventory.GetIsInventoryEmpty())
+                    {
+                        hit.transform.gameObject.GetComponent<InteractableObject>().UseActionKeyOnObject();
+                    }
+                    else
+                    {
+                        hit.transform.gameObject.GetComponent<InteractableObject>().UseActionKeyOnObject(m_myInventory.GetCurrentlyEquippedItem().obj);
+                    }
+                    
                 }
             }
         }
@@ -164,7 +193,6 @@ public class UseItem : MonoBehaviour {
     {
         m_pulledObject.transform.parent = null;
         m_isPullingObject = false;
-        Debug.Log("dropped");
     }
 
     private void HandleAttack()
@@ -183,7 +211,7 @@ public class UseItem : MonoBehaviour {
     }
     private void AttackHit()
     {
-        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        Ray ray = m_mycamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 100f))
         {
@@ -229,7 +257,9 @@ public class UseItem : MonoBehaviour {
     private bool m_canDrop;
     private float m_timerLift;
     private bool m_isAttacking;
-    
+    private bool m_canDropEquipped=true;
+
+
     private bool m_isPullingObject;
     private GameObject m_pulledObject;
     #endregion
