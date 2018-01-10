@@ -76,6 +76,7 @@ public class UseItem : MonoBehaviour {
         m_isAttacking = true;
         WeaponAnimator.SetBool("StartAnim", true);
         yield return new WaitForSeconds(m_durationOfAttack);
+        AttackHit();
         WeaponAnimator.SetBool("StartAnim", false);
         m_isAttacking = false;
     }
@@ -188,7 +189,8 @@ public class UseItem : MonoBehaviour {
             {
                 if (hit.transform.gameObject.GetComponent<InteractableObject>())
                 {
-                    hit.transform.gameObject.GetComponent<InteractableObject>().HittingObject();
+                    hit.transform.gameObject.GetComponent<InteractableObject>().HittingObject(2);
+                    Debug.Log("hey");
                 }
             }
         }
