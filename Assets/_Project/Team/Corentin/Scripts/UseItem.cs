@@ -16,14 +16,15 @@ public class UseItem : MonoBehaviour {
     //les fonctions que cédric appellera avec ses controles
     public void Activate()
     {
-        if (!m_actionStarted)
-        {
-            ItemInteractionStart();
-        }
+        ItemInteractionStart();
     }
     public void Deactivate()
     {
         ItemInteractionStop();
+    }
+    public void SwitchWeapon()
+    {
+        m_myInventory.SwitchToNextItemFromInventory();
     }
     //-----
     #endregion
@@ -42,17 +43,38 @@ public class UseItem : MonoBehaviour {
     //temporaire jusqu'a ce qu'on ai géré les inputs, alors cédric utilisera ItemInteractionStart(); et ItemInteractionStop(); depuis ses fonctions
     void Update()
     {
+        
         if(Input.GetButton("Fire1"))
         {
             Activate();
         }
-        else
+        if(Input.GetButton("Fire2"))
         {
-            if(m_actionStarted)
+            if (m_actionStarted)
             {
                 Deactivate();
             }
         }
+        if (Input.GetButton("Fire3"))
+        {
+            
+            if(m_timer==0)//need un timer sinon 1 click échange 5 fois^^
+            {
+                SwitchWeapon();
+                m_onTimer = true;
+            }
+            
+        }
+        if(m_onTimer)
+        {
+            m_timer += Time.deltaTime;
+            if (m_timer > 0.5f)
+            {
+                m_onTimer = false;
+                m_timer = 0;
+            }
+        }
+        
     }
     //----------------------------------------------------------
     #endregion
@@ -61,10 +83,11 @@ public class UseItem : MonoBehaviour {
 
     private void ItemInteractionStart()
     {
+        
         m_actionStarted = true;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit , 100f))
         {
             Debug.Log(hit.transform.gameObject.name);
             if (hit.distance < m_maxDistanceInteraction)//if the object is close enough to be interacted with
@@ -108,6 +131,10 @@ public class UseItem : MonoBehaviour {
         {
             obj.transform.localRotation = Quaternion.Euler(-180f, 0f, 0f);
         }
+        if (obj.name.Contains("Key"))//la rotation vas varier selon le type d'item, exemple, hache et clé ont rotation différentes...
+        {
+            obj.transform.localRotation = Quaternion.Euler(0f, 0f, -90f);
+        }
         m_myInventory.AddToInventoryAndEquip(obj,0,true);
     }
     #endregion
@@ -119,6 +146,9 @@ public class UseItem : MonoBehaviour {
 
 
     #region Private And Protected Members
+    private bool m_onTimer;
+    private float m_timer = 0f;
+
     private bool m_actionStarted;
     private bool m_isPullingObject;
     private GameObject m_pulledObject;
