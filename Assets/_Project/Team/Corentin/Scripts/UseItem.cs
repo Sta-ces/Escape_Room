@@ -75,9 +75,11 @@ public class UseItem : MonoBehaviour {
     {
         m_isAttacking = true;
         WeaponAnimator.SetBool("StartAnim", true);
+        Debug.Log("anim start");
         yield return new WaitForSeconds(m_durationOfAttack);
         AttackHit();
         WeaponAnimator.SetBool("StartAnim", false);
+        Debug.Log("anim stop");
         m_isAttacking = false;
     }
 
@@ -119,7 +121,7 @@ public class UseItem : MonoBehaviour {
 
     private void ItemInteractionStart()
     {
-        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit , 100f))
         {
@@ -181,7 +183,7 @@ public class UseItem : MonoBehaviour {
     }
     private void AttackHit()
     {
-        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 100f))
         {
