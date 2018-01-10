@@ -12,6 +12,8 @@ public class UseItem : MonoBehaviour {
     public float m_timeBetweenInventoryItemSwitch = 0.3f;
     public float m_timeToKeepButtonPushedToLiftItem = 0.45f;
     public float m_timeBeforeCanDropItemJustPicked = 2f;
+    [Range (0.5f,3f)]
+    public float m_durationOfAttack = 1f;
     #endregion
 
 
@@ -19,16 +21,19 @@ public class UseItem : MonoBehaviour {
     //les fonctions que cédric appellera avec ses controles
     public void Activate()
     {
-        if (m_isPullingObject)//s'il est en train de tirer un block
+        if(!m_isAttacking)//s'il n'est pas en train d'attaquer
         {
-            if (m_canDrop == true)
+            if (m_isPullingObject)//s'il est en train de tirer un block
             {
-                ItemInteractionStop();
+                if (m_canDrop == true)
+                {
+                    ItemInteractionStop();
+                }
             }
-        }
-        else
-        {
-            ItemInteractionStart();
+            else
+            {
+                ItemInteractionStart();
+            }
         }
     }
     public void ActivateSwitchWeaponKey()
@@ -39,6 +44,10 @@ public class UseItem : MonoBehaviour {
             m_myInventory.SwitchToNextItemFromInventory();
             StartCoroutine("TimerSwitchW");
         }
+    }
+    public void Attack()
+    {
+        HandleAttack();
     }
     //--------------------------------------------------------
 
@@ -63,6 +72,12 @@ public class UseItem : MonoBehaviour {
         m_canDrop = true;
     }
 
+    IEnumerator TimerAttackDuration()
+    {
+        yield return new WaitForSeconds(m_durationOfAttack);
+        m_isAttacking = false;
+    }
+
         #endregion
 
 
@@ -76,18 +91,23 @@ public class UseItem : MonoBehaviour {
         }
     }
 
-    //temporaire jusqu'a ce qu'on ai géré les inputs, alors cédric utilisera ItemInteractionStart(); et ItemInteractionStop(); depuis ses fonctions
+    //temporaire jusqu'a ce qu'on ai géré les inputs, alors cédric utilisera activate(), ActivateSwitchWeaponKey() , et attack() depuis ses fonctions
     void Update()
     {
-        
-        if(Input.GetButton("Fire1"))
+
+        if (Input.GetButton("Fire3"))//gachette tir
+        {
+            Attack();
+        }
+        if (Input.GetButton("Fire2"))//bouton utiliser
         {
             Activate();
         }
-        if(Input.GetButton("Fire2"))
+        if(Input.GetButton("Fire3"))//bouton change d'arme
         {
             ActivateSwitchWeaponKey();
         }
+
     }
     //----------------------------------------------------------
     #endregion
@@ -142,6 +162,20 @@ public class UseItem : MonoBehaviour {
         Debug.Log("dropped");
     }
 
+    private void HandleAttack()
+    {
+        if(!m_isAttacking && ! m_isPullingObject) //ne peut pas lancer d'attaque si attaque en cours ou objet porté
+        {
+            if (m_myInventory.GetCurrentlyEquippedItem().isAWeapon)
+            {
+                StartCoroutine("TimerAttackDuration");
+
+
+
+            }
+        }
+    }
+
     private void AddAndEditItemAsEquipement(GameObject obj)
     {
 
@@ -152,12 +186,13 @@ public class UseItem : MonoBehaviour {
         if (obj.name.Contains("FireAxe"))//la rotation vas varier selon le type d'item, exemple, hache et clé ont rotation différentes...
         {
             obj.transform.localRotation = Quaternion.Euler(-180f, 0f, 0f);
+            m_myInventory.AddToInventoryAndEquip(obj, 0, true); //objet , nombre charges , isaweapon
         }
         if (obj.name.Contains("Key"))//la rotation vas varier selon le type d'item, exemple, hache et clé ont rotation différentes...
         {
             obj.transform.localRotation = Quaternion.Euler(0f, 0f, -90f);
+            m_myInventory.AddToInventoryAndEquip(obj, 0, false); //objet , nombre charges , isaweapon
         }
-        m_myInventory.AddToInventoryAndEquip(obj,0,true);
     }
     #endregion
 
@@ -172,7 +207,7 @@ public class UseItem : MonoBehaviour {
     private bool m_canLift;
     private bool m_canDrop;
     private float m_timerLift;
-
+    private bool m_isAttacking;
     
     private bool m_isPullingObject;
     private GameObject m_pulledObject;

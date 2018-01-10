@@ -53,6 +53,10 @@ public class Inventory  : MonoBehaviour
     {
         //not done yet
     }
+    public StructUsableItem GetCurrentlyEquippedItem()
+    {
+        return m_inventory[m_posOfCurrentEquipedItem];
+    }
     #endregion
 
 
