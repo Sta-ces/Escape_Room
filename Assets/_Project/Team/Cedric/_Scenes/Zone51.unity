@@ -147,9 +147,9 @@ MonoBehaviour:
   m_playerName: 1
   m_cameraPlayer: {fileID: 601514543}
   m_moveSpeed: 3
-  m_cameraSpeed: 100
-  m_minRotationVertical: 15
-  m_maxRotationVertical: -55
+  m_mouseSensibility: 100
+  m_minCameraAngle: -50
+  m_maxCameraAngle: 50
 --- !u!54 &305724107
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -333,9 +333,9 @@ MonoBehaviour:
   m_playerName: 0
   m_cameraPlayer: {fileID: 2102552413}
   m_moveSpeed: 3
-  m_cameraSpeed: 100
-  m_minRotationVertical: 0
-  m_maxRotationVertical: 10
+  m_mouseSensibility: 100
+  m_minCameraAngle: -50
+  m_maxCameraAngle: 50
 --- !u!54 &365371725
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -423,7 +423,7 @@ Camera:
     m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 2
+  m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
@@ -898,7 +898,7 @@ MonoBehaviour:
         _elementType: 0
         _elementIdentifierId: 3
         _axisRange: 0
-        _invert: 1
+        _invert: 0
         _axisContribution: 0
         _keyboardKeyCode: 0
         _modifierKey1: 0
@@ -1075,7 +1075,7 @@ MonoBehaviour:
         _elementType: 0
         _elementIdentifierId: 1
         _axisRange: 0
-        _invert: 1
+        _invert: 0
         _axisContribution: 0
         _keyboardKeyCode: 0
         _modifierKey1: 0
@@ -1104,7 +1104,7 @@ MonoBehaviour:
         _elementType: 0
         _elementIdentifierId: 1
         _axisRange: 0
-        _invert: 1
+        _invert: 0
         _axisContribution: 0
         _keyboardKeyCode: 0
         _modifierKey1: 0
@@ -1380,7 +1380,7 @@ Camera:
     m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 1
+  m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
