@@ -15,8 +15,12 @@ public class InteractableObject  : MonoBehaviour
     #region Public Void
     public void UseActionKeyOnObject()
     {
-        //Debug.Log("Object " + this.gameObject.name + " is used");
-        //code some effect here...
+        Debug.Log("hey");
+        if(gameObject.name.Contains("Chest"))
+        {
+            gameObject.GetComponent<Animator>().SetBool("isOpen", true);
+        }
+
     }
     public void HittingObject(int damage)
     {
