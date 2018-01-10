@@ -24,7 +24,6 @@ public class InteractableObject  : MonoBehaviour
                     gameObject.GetComponent<Animator>().SetBool("isOpen", true);
                     foreach (Collider col in gameObject.GetComponents<Collider>())
                     {
-
                         if (col.isTrigger)
                         {
                             StartCoroutine("TimerToOpenChest", col);
