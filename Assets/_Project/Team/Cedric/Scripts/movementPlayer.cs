@@ -18,18 +18,17 @@ public class movementPlayer : MonoBehaviour
 
     public float m_moveSpeed = 3.0f;
     public float m_cameraSpeed = 100.0f;
-    public float m_minRotationVertical = 15f;
-    public float m_maxRotationVertical = -55f;
-
-    private Player m_player; // The Rewired Player
-    private Rigidbody m_rigidbody;
-    private Vector3 m_moveVector;
-    private Vector3 m_cameraVector;
 
     void Awake()
     {
         // Get the character controller
         m_rigidbody = GetComponent<Rigidbody>();
+
+        // Instance UseItem class
+        m_useItem = new UseItem();
+
+        // Instance FlashLight class
+        m_useLight = new FlashLight();
     }
 
     void Update()
@@ -42,7 +41,8 @@ public class movementPlayer : MonoBehaviour
     private void GetPlayers()
     {
         // Get the Rewired Player object for this player and keep it for the duration of the character's lifetime
-        switch (m_playerName) {
+        switch (m_playerName)
+        {
             case e_Player.Player1:
                 m_player = ReInput.players.GetPlayer("Player 1");
                 break;
@@ -67,7 +67,14 @@ public class movementPlayer : MonoBehaviour
 
         if (m_player.GetButtonDown("Use"))
         {
-            Debug.Log("Use");
+            Debug.Log("Use : movementPlayer.cs/66");
+            m_useItem.Activate();
+        }
+
+        if (m_player.GetButtonDown("UseLight"))
+        {
+            Debug.Log("Use Light : movementPlayer.cs/72");
+            m_useLight.Switch();
         }
     }
 
@@ -76,7 +83,14 @@ public class movementPlayer : MonoBehaviour
         // Process movement
         m_rigidbody.transform.Translate(m_moveVector * m_moveSpeed * Time.deltaTime);
         m_rigidbody.transform.Rotate(0, m_cameraVector.y * m_cameraSpeed * Time.deltaTime, 0, Space.World);
-
-        m_cameraPlayer.transform.Rotate(m_cameraVector.x * m_cameraSpeed * Time.deltaTime, 0, 0);
+        float vectX = m_cameraVector.x * m_cameraSpeed * Time.deltaTime;
+        m_cameraPlayer.transform.Rotate(vectX, 0, 0);
     }
+
+    private Player m_player; // The Rewired Player
+    private Rigidbody m_rigidbody;
+    private Vector3 m_moveVector;
+    private Vector3 m_cameraVector;
+    private UseItem m_useItem;
+    private FlashLight m_useLight;
 }
