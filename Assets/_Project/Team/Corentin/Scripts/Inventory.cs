@@ -11,18 +11,7 @@ public class Inventory  : MonoBehaviour
 
 
     #region Public Void
-
-    /*
-    public void AddToInventory(GameObject PickedItem, float charge = 0)
-    {
-        PickedItem.SetActive(false);
-        StructUsableItem item = new StructUsableItem()
-        {
-            obj = PickedItem,
-            charges = charge
-        };
-        m_inventory.Add(item);
-    }*/
+    
     public void AddToInventoryAndEquip(GameObject PickedItem, float charge = 0 , bool weapon= false)
     {
         StructUsableItem item = new StructUsableItem()
@@ -58,11 +47,15 @@ public class Inventory  : MonoBehaviour
     }
     public void DropCurrentItem()
     {
-
+        //not done yet
     }
     public void DestroyCurrentItem()/*for useableItems*/
     {
-
+        //not done yet
+    }
+    public StructUsableItem GetCurrentlyEquippedItem()
+    {
+        return m_inventory[m_posOfCurrentEquipedItem];
     }
     #endregion
 
