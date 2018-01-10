@@ -57,9 +57,9 @@ public class UseItem : MonoBehaviour {
             GameObject objToDrop = m_myInventory.GetCurrentlyEquippedItem().obj;
             objToDrop.transform.parent = null;
             m_myInventory.RemoveCurrentItem();
+            objToDrop.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
             StartCoroutine("TimerAfterDropEquippedItem");
             m_canDropEquipped = false;
-            Debug.Log("yop");
         }
     }
     //--------------------------------------------------------
@@ -147,7 +147,6 @@ public class UseItem : MonoBehaviour {
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit , 100f))
         {
-            //Debug.Log(hit.transform.gameObject.name);
             if (hit.distance < m_maxDistanceInteraction)//if the object is close enough to be interacted with
             {
                 if (hit.transform.gameObject.tag == "Movable")
