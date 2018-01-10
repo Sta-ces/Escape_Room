@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnigmeCedric : MonoBehaviour {
+public class EnigmePlateform : MonoBehaviour {
 
     public List<GameObject> m_listPlateform;
     public GameObject m_doorToOpen;
@@ -36,7 +36,7 @@ public class EnigmeCedric : MonoBehaviour {
 
     private void OpenDoor()
     {
-        m_doorToOpen.transform.Translate(new Vector3(0,15,0));
+        m_doorToOpen.GetComponent<Animator>().SetBool("openDoor",true);
         m_success = true;
     }
 
