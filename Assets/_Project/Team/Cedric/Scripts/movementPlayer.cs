@@ -18,6 +18,8 @@ public class movementPlayer : MonoBehaviour
 
     public float m_moveSpeed = 3.0f;
     public float m_cameraSpeed = 100.0f;
+    public float m_minCameraAngle = -50f;
+    public float m_maxCameraAngle = 50f;
 
     void Awake()
     {
@@ -29,6 +31,12 @@ public class movementPlayer : MonoBehaviour
 
         // Instance FlashLight class
         m_useLight = new FlashLight();
+    }
+
+    void Start()
+    {
+        // Disappear the mouse on play
+        Cursor.visible = false;
     }
 
     void Update()
@@ -60,10 +68,7 @@ public class movementPlayer : MonoBehaviour
         m_moveVector.x = m_player.GetAxis("MoveHorizontal"); // get input by name or action id
         m_moveVector.z = m_player.GetAxis("MoveVertical");
         m_cameraVector.y = m_player.GetAxis("CameraHorizontal");
-        m_cameraVector.x = m_player.GetAxis("CameraVertical");
-
-        //float pourcent=0.23f;
-        //float myValue = 15f + (55 - 15f) * pourcent;
+        m_cameraVector.x += m_player.GetAxis("CameraVertical") * m_cameraSpeed * Time.deltaTime;
 
         if (m_player.GetButtonDown("Use"))
         {
@@ -83,8 +88,9 @@ public class movementPlayer : MonoBehaviour
         // Process movement
         m_rigidbody.transform.Translate(m_moveVector * m_moveSpeed * Time.deltaTime);
         m_rigidbody.transform.Rotate(0, m_cameraVector.y * m_cameraSpeed * Time.deltaTime, 0, Space.World);
-        float vectX = m_cameraVector.x * m_cameraSpeed * Time.deltaTime;
-        m_cameraPlayer.transform.Rotate(vectX, 0, 0);
+        float vectX = m_cameraVector.x;
+        vectX = Mathf.Clamp(vectX, m_minCameraAngle, m_maxCameraAngle);
+        m_cameraPlayer.transform.localEulerAngles = new Vector3(vectX, 0,0);
     }
 
     private Player m_player; // The Rewired Player
