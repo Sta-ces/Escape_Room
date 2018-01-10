@@ -119,7 +119,7 @@ public class UseItem : MonoBehaviour {
 
     private void ItemInteractionStart()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit , 100f))
         {
@@ -181,7 +181,7 @@ public class UseItem : MonoBehaviour {
     }
     private void AttackHit()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 100f))
         {
@@ -190,7 +190,6 @@ public class UseItem : MonoBehaviour {
                 if (hit.transform.gameObject.GetComponent<InteractableObject>())
                 {
                     hit.transform.gameObject.GetComponent<InteractableObject>().HittingObject(2);
-                    Debug.Log("hey");
                 }
             }
         }
