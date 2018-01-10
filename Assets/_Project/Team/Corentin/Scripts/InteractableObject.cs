@@ -13,7 +13,7 @@ public class InteractableObject  : MonoBehaviour
     #region Public Void
     public void UseActionKeyOnObject()
     {
-        Debug.Log("Object " + this.gameObject.name + " is used");
+        //Debug.Log("Object " + this.gameObject.name + " is used");
         //code some effect here...
     }
     public void HittingObject()

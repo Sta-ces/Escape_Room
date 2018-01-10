@@ -14,25 +14,64 @@ public class UseItem : MonoBehaviour {
 
     #region Public Void
     //les fonctions que cédric appellera avec ses controles
-    public void Activate()
+    public void ActivateUseKey()
     {
-        ItemInteractionStart();
+        if (!m_isPullingObject)//s'il n'est pas en train de tirer un block
+        {
+            if(m_timerLift==0)
+            {
+                StartCoroutine("TimerLiftItem");//lance un compteur après 1ere fois bouton appuyer
+                //vas compter le temps ou le bouton est appuyer
+            }
+            m_timerLift += Time.deltaTime;
+            ItemInteractionStart();
+        }
+        else
+        {
+            if (m_canDrop == true)
+            {
+                ItemInteractionStop();
+            }
+        }
     }
-    public void Deactivate()
+    public void ActivateSwitchWeaponKey()
     {
-        ItemInteractionStop();
+        if(!m_onTimerSwitchWeapon)//s'il n'est pas en train de switch d'un objet en main a un autre
+        {
+            m_onTimerSwitchWeapon = true;
+            m_myInventory.SwitchToNextItemFromInventory();
+            StartCoroutine("TimerSwitchW");
+        }
     }
-    public void SwitchWeapon()
+    //--------------------------------------------------------
+
+    IEnumerator TimerSwitchW()
     {
-        m_myInventory.SwitchToNextItemFromInventory();
+        yield return new WaitForSeconds(0.3f);
+        m_onTimerSwitchWeapon = false;
     }
-    //-----
-    #endregion
+    IEnumerator TimerLiftItem()
+    {
+        yield return new WaitForSeconds(0.5f);
+        Debug.Log(m_timerLift);
+        if (m_timerLift>0.45f)//s'il a laisser appuyer 4/10eme de sec
+        {
+            m_canLift = true;
+            m_timerLift = 0;
+        }
+    }
+    IEnumerator TimerAfterLiftItem()//pour qu'on ne drop pas l'item a l'instant ou l'a ramasser, on met un timer^^
+    {
+        yield return new WaitForSeconds(2f);
+        m_canDrop = true;
+    }
+
+        #endregion
 
 
-    #region System
+        #region System
 
-    void Awake()
+        void Awake()
     {
         if(m_playerCharacter==null)
         {
@@ -46,35 +85,12 @@ public class UseItem : MonoBehaviour {
         
         if(Input.GetButton("Fire1"))
         {
-            Activate();
+            ActivateUseKey();
         }
         if(Input.GetButton("Fire2"))
         {
-            if (m_actionStarted)
-            {
-                Deactivate();
-            }
+            ActivateSwitchWeaponKey();
         }
-        if (Input.GetButton("Fire3"))
-        {
-            
-            if(m_timer==0)//need un timer sinon 1 click échange 5 fois^^
-            {
-                SwitchWeapon();
-                m_onTimer = true;
-            }
-            
-        }
-        if(m_onTimer)
-        {
-            m_timer += Time.deltaTime;
-            if (m_timer > 0.5f)
-            {
-                m_onTimer = false;
-                m_timer = 0;
-            }
-        }
-        
     }
     //----------------------------------------------------------
     #endregion
@@ -83,21 +99,26 @@ public class UseItem : MonoBehaviour {
 
     private void ItemInteractionStart()
     {
-        
-        m_actionStarted = true;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit , 100f))
         {
-            Debug.Log(hit.transform.gameObject.name);
+            //Debug.Log(hit.transform.gameObject.name);
             if (hit.distance < m_maxDistanceInteraction)//if the object is close enough to be interacted with
             {
                 if (hit.transform.gameObject.tag == "Movable")
                 {
-                    m_isPullingObject = true;
-                    m_pulledObject = hit.transform.gameObject;
-                    //il faudra un son ici pour quand on commence a tirer un objet autrement sans bouger on se rend pas compte qu'il est tiré
-                    hit.transform.parent = m_playerCharacter.transform;
+                    if(m_canLift)
+                    {
+                        Debug.Log("lift");
+                        m_pulledObject = hit.transform.gameObject;
+                        //il faudra un son ici pour quand on commence a tirer un objet autrement sans bouger on se rend pas compte qu'il est tiré
+                        hit.transform.parent = m_playerCharacter.transform;
+                        m_isPullingObject = true;
+                        m_canLift = false;
+                        m_canDrop = false;
+                        StartCoroutine("TimerAfterLiftItem");//pour qu'on ne drop pas l'item a l'instant ou l'a ramasser, on met un timer^^
+                    }
                 }
                 if (hit.transform.gameObject.tag == "Pickable")
                 {
@@ -113,11 +134,8 @@ public class UseItem : MonoBehaviour {
 
     private void ItemInteractionStop()
     {
-        m_actionStarted = false;
-        if(m_isPullingObject)
-        {
-            m_pulledObject.transform.parent = null;
-        }
+        m_pulledObject.transform.parent = null;
+        m_isPullingObject = false;
     }
 
     private void AddAndEditItemAsEquipement(GameObject obj)
@@ -146,10 +164,12 @@ public class UseItem : MonoBehaviour {
 
 
     #region Private And Protected Members
-    private bool m_onTimer;
-    private float m_timer = 0f;
+    private bool m_onTimerSwitchWeapon;
+    private bool m_canLift;
+    private bool m_canDrop;
+    private float m_timerLift;
 
-    private bool m_actionStarted;
+    
     private bool m_isPullingObject;
     private GameObject m_pulledObject;
     #endregion
