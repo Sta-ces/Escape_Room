@@ -1,7 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 2933dd2fe51a2a84baa1b32400bace8d
 timeCreated: 1515601670
 licenseType: Free
+=======
+guid: d16bba2a032a7ed42b45f8562c54cd82
+>>>>>>> master
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
@@ -61,6 +65,10 @@ ModelImporter:
     4300012: sdsads1
     4300014: lachaki abiu
     4300016: Box001
+<<<<<<< HEAD
+=======
+    9500000: //RootNode
+>>>>>>> master
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -135,7 +143,11 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+<<<<<<< HEAD
   animationType: 0
+=======
+  animationType: 2
+>>>>>>> master
   humanoidOversampling: 1
   additionalBone: 0
   userData: 

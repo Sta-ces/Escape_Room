@@ -1,0 +1,174 @@
+fileFormatVersion: 2
+guid: 7d1ebcde70226e04fad414e4e699e7dc
+timeCreated: 1515581398
+licenseType: Free
+ModelImporter:
+  serializedVersion: 21
+  fileIDToRecycleName:
+    100000: Cube
+    100002: Escalier
+    100004: Mezzanine
+    100006: Mezzanine.016
+    100008: MontantPorte
+    100010: MontantPorte.001
+    100012: MontantPortetoilette
+    100014: MurDessus
+    100016: MurEscalier
+    100018: MurGauche
+    100020: MurMezzanine
+    100022: Plafond
+    100024: Player
+    100026: Plinte2
+    100028: Plinte3
+    100030: Rampe
+    100032: RampeMezzanine
+    100034: //RootNode
+    100036: Sol
+    400000: Cube
+    400002: Escalier
+    400004: Mezzanine
+    400006: Mezzanine.016
+    400008: MontantPorte
+    400010: MontantPorte.001
+    400012: MontantPortetoilette
+    400014: MurDessus
+    400016: MurEscalier
+    400018: MurGauche
+    400020: MurMezzanine
+    400022: Plafond
+    400024: Player
+    400026: Plinte2
+    400028: Plinte3
+    400030: Rampe
+    400032: RampeMezzanine
+    400034: //RootNode
+    400036: Sol
+    2300000: Cube
+    2300002: Escalier
+    2300004: Mezzanine
+    2300006: Mezzanine.016
+    2300008: MontantPorte
+    2300010: MontantPorte.001
+    2300012: MontantPortetoilette
+    2300014: MurDessus
+    2300016: MurEscalier
+    2300018: MurGauche
+    2300020: MurMezzanine
+    2300022: Plafond
+    2300024: Player
+    2300026: Plinte2
+    2300028: Plinte3
+    2300030: Rampe
+    2300032: RampeMezzanine
+    2300034: Sol
+    3300000: Cube
+    3300002: Escalier
+    3300004: Mezzanine
+    3300006: Mezzanine.016
+    3300008: MontantPorte
+    3300010: MontantPorte.001
+    3300012: MontantPortetoilette
+    3300014: MurDessus
+    3300016: MurEscalier
+    3300018: MurGauche
+    3300020: MurMezzanine
+    3300022: Plafond
+    3300024: Player
+    3300026: Plinte2
+    3300028: Plinte3
+    3300030: Rampe
+    3300032: RampeMezzanine
+    3300034: Sol
+    4300000: MurDessus
+    4300002: MurMezzanine
+    4300004: Cube
+    4300006: RampeMezzanine
+    4300008: Rampe
+    4300010: Mezzanine
+    4300012: Plinte2
+    4300014: MurEscalier
+    4300016: Escalier
+    4300018: MontantPorte
+    4300020: Sol
+    4300022: Player
+    4300024: MurGauche
+    4300026: Plinte3
+    4300028: MontantPortetoilette
+    4300030: Mezzanine.016
+    4300032: MontantPorte.001
+    4300034: Plafond
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
