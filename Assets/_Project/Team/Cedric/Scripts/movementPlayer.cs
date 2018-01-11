@@ -4,6 +4,8 @@ using UnityEngine;
 using Rewired;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(UseItem))]
+[RequireComponent(typeof(Inventory))]
 public class movementPlayer : MonoBehaviour
 {
     public enum e_Player
