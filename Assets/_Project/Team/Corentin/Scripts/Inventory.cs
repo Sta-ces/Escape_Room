@@ -6,12 +6,11 @@ public class Inventory  : MonoBehaviour
 {
 
     #region Public Members
-
     #endregion
 
 
     #region Public Void
-    
+
     public void AddToInventoryAndEquip(GameObject PickedItem, float charge = 0 , bool weapon= false)
     {
         StructUsableItem item = new StructUsableItem()
@@ -26,6 +25,7 @@ public class Inventory  : MonoBehaviour
             m_inventory[m_posOfCurrentEquipedItem].obj.SetActive(false);
         }
         m_posOfCurrentEquipedItem = m_inventory.Count - 1;
+        m_isEmpty = false;
     }
     public void SwitchToNextItemFromInventory()
     {
@@ -45,9 +45,30 @@ public class Inventory  : MonoBehaviour
             }
         }
     }
-    public void DropCurrentItem()
+    public bool CheckIfItemIsEquipped()
     {
-        //not done yet
+        if (m_inventory.Count > 0)//si y'a au moins 1 item
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public void RemoveCurrentItem()
+    {
+        m_inventory.RemoveAt(m_posOfCurrentEquipedItem);
+        if(m_inventory.Count==0)
+        {
+            m_isEmpty = true;
+        }
+        else
+        {
+            m_posOfCurrentEquipedItem=0;
+            m_inventory[m_posOfCurrentEquipedItem].obj.SetActive(true);
+        }
     }
     public void DestroyCurrentItem()/*for useableItems*/
     {
@@ -57,11 +78,18 @@ public class Inventory  : MonoBehaviour
     {
         return m_inventory[m_posOfCurrentEquipedItem];
     }
+    public bool GetIsInventoryEmpty()
+    {
+        return m_isEmpty;
+    }
     #endregion
 
 
     #region System
+    private void Awake()
+    {
 
+    }
 
     #endregion
 
@@ -75,6 +103,7 @@ public class Inventory  : MonoBehaviour
 
 
     #region Private And Protected Members
+    private bool m_isEmpty=true;
     private int m_posOfCurrentEquipedItem;
     private List<StructUsableItem> m_inventory = new List<StructUsableItem>();
     #endregion
