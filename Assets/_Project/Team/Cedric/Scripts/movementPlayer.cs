@@ -109,7 +109,7 @@ public class movementPlayer : MonoBehaviour
         {
             m_cameraRotationState.x = m_maxCameraAngle;
         }
-        m_cameraPlayer.transform.localEulerAngles = m_cameraRotationState;
+        m_cameraPlayer.transform.localEulerAngles = -m_cameraRotationState;
     }
 
     private Player m_player; // The Rewired Player
