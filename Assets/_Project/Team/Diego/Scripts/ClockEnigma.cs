@@ -48,14 +48,20 @@ public class ClockEnigma : MonoBehaviour {
 
     private void DragHour()
     {
+       // Debug.Log(Time.fixedDeltaTime * 29999);
       
-        m_hourTime.transform.RotateAround(m_anchor.transform.position, Vector3.up, m_hourTime.transform.eulerAngles.y + 1f);
+        m_hourTime.transform.RotateAround(m_anchor.transform.position, Vector3.up, 0.6f );
 
     }
 
     private void DragMinute()
     {
-        m_minuteTime.transform.RotateAround(m_anchor.transform.position, Vector3.up, m_minuteTime.transform.eulerAngles.y + 1f);
+        m_minuteTime.transform.RotateAround(m_anchor.transform.position, Vector3.up, 0.1f );
 
     }
+
+
+
+
+
 }

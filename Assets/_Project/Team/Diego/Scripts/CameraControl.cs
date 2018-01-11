@@ -155,7 +155,7 @@ public class CameraControl : MonoBehaviour {
          float angleP2 = Vector3.SignedAngle(DistanceBetweenPlayer() / 2, Vector3.zero, Vector3.up);*/
         float angleP1 = Quaternion.Angle(_player1Cam.transform.rotation, Quaternion.identity);
         float angleP2 = Quaternion.Angle( _player2Cam.transform.rotation, Quaternion.identity);
-        Debug.Log(angleP1 + "=" + angleP2);
+        //Debug.Log(angleP1 + "=" + angleP2);
         if (angleP1 == angleP2)
         { return true;
     }
@@ -180,7 +180,7 @@ public class CameraControl : MonoBehaviour {
         //_player1Cam.rect = new Rect(0, 0, 0.5f, 1f);
         //_player2Cam.rect = new Rect(0.5f, 0, 0.5f, 0);
         //_main_cam.rect = new Rect(0, 0, 1f, 1f);
-        Debug.Log(_player2Cam.name);
+       // Debug.Log(_player2Cam.name);
     }
 
 }
